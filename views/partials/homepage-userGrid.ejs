@@ -1,0 +1,10 @@
+
+<div class="homepage homepage__all">
+    <% users.forEach(function(user) { %>
+        <div class="homepage__all--user homepage__all--user img">
+            <p><%- user.name %></p>
+            <img src= <%- user.avatarUrl %> alt="no picture">
+        </div>
+     <% }); %>
+</div>
+
