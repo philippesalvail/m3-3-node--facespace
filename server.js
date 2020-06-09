@@ -10,12 +10,10 @@ const handleFourOhFour = (req, res) => {
   res.status(404).send("I couldn't find what you're looking for.");
 };
 
-// const q1 = (req, res) => {
-//   res.render("pages/homepage", { users });
-// };
-const handleHomepage = (req, res) => {
-  res.status(200).send("homepage");
+const q1 = (req, res) => {
+  res.render("pages/homepage", { users });
 };
+
 // -----------------------------------------------------
 // server endpoints
 const PORT = process.env.PORT || 8000;
@@ -28,7 +26,7 @@ express()
   // endpoints
 
   // a catchall endpoint that will send the 404 message.
-  .get("/", handleHomepage)
+  .get("/homepage", q1)
   .get("*", handleFourOhFour)
 
   .listen(8000, () => console.log(`Listening on port ${PORT} `));
