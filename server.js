@@ -40,6 +40,28 @@ const handleSign = (req, res) => {
   res.render("pages/signin");
 };
 
+const handleName = (req, res) => {
+  let firstName = req.query.firstName;
+  if (findUser(firstName)._id) {
+    let user = findUser(firstName);
+    console.log("have a user: ", user);
+    res.redirect(`/homepage/${user._id}`);
+  } else {
+    console.log("do not have a user");
+    res.redirect("/signin");
+  }
+};
+
+function findUser(userName) {
+  let userFound = {};
+  users.forEach(function (user) {
+    if (userName == user.name) {
+      userFound = user;
+    }
+  });
+  return userFound; // The function returns the product of p1 and p2
+}
+
 // -----------------------------------------------------
 // server endpoints
 const PORT = process.env.PORT || 8000;
@@ -53,6 +75,7 @@ express()
 
   // a catchall endpoint that will send the 404 message.
   .get("/signin", handleSign)
+  .get("/getName", handleName)
   .get("/homepage", q1)
   .get("/homepage/:user_id", q2)
   .get("*", handleFourOhFour)

@@ -1,22 +1,22 @@
 
 
-<div class="profile-page--banner">
-  <div class="profile-page__user">
-      <img class="profile-page__user--avatar" src=<%- currentUser.avatarUrl %> alt="">
-      <h2><%- currentUser.name %></h2>
+<div class="profile-page--banner"></div>
+    <div class="profile-page__user">
+        <img class="profile-page__user--avatar" src=<%- currentUser.avatarUrl %> alt="">
+        <h2><%- currentUser.name %></h2>
+    </div>
+    <div class="profile-page__friends">
+      <h3><%- currentUser.name %>'s Friends</h3>
+    <ul class="profile-page__friends--list">
+      <% currentUserFriends.forEach(function(friend) { %>
+      <li class="friend">
+        <img src= <%- friend.avatarUrl %>  alt="">
+        <p><%- friend.name %></p>
+      </li>
+      <% }); %>
+    </ul>
   </div>
-  <div class="profile-page__friends">
-    <h3><%- currentUser.name %>'s Friends</h3>
-  <ul class="profile-page__friends--list">
-    <% currentUserFriends.forEach(function(friend) { %>
-    <li class="friend">
-      <img src= <%- friend.avatarUrl %>  alt="">
-      <p><%- friend.name %></p>
-    </li>
-    <% }); %>
-  </ul>
-</div>
-</div>
+
 
 
   
