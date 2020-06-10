@@ -36,6 +36,10 @@ const q2 = (req, res) => {
   res.status(200).render("pages/profile", { currentUser, currentUserFriends });
 };
 
+const handleSign = (req, res) => {
+  res.render("pages/signin");
+};
+
 // -----------------------------------------------------
 // server endpoints
 const PORT = process.env.PORT || 8000;
@@ -48,6 +52,7 @@ express()
   // endpoints
 
   // a catchall endpoint that will send the 404 message.
+  .get("/signin", handleSign)
   .get("/homepage", q1)
   .get("/homepage/:user_id", q2)
   .get("*", handleFourOhFour)
