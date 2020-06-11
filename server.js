@@ -11,44 +11,49 @@ const handleFourOhFour = (req, res) => {
 };
 
 const q1 = (req, res) => {
-  res.status(200).render("pages/homepage", { users });
+  let signIn = "Sign in";
+  res.status(200).render("pages/homepage", { users, signIn });
 };
 
 const q2 = (req, res) => {
   let user_id = req.params.user_id;
   if (user_id < users[0]._id || user_id > users[users.length - 1]._id) {
     res.status(404).send("User id does not exist.");
-  }
-  let currentUserFriends = [];
-  users.forEach(function (user) {
-    if (user_id == user._id) {
-      currentUser = user;
-    }
-  });
-  users.forEach(function (friend) {
-    currentUser.friends.forEach(function (currentUserFriend) {
-      if (currentUserFriend == friend._id) {
-        currentUserFriends.push(friend);
+  } else {
+    let currentUserFriends = [];
+    users.forEach(function (user) {
+      if (user_id == user._id) {
+        currentUser = user;
       }
     });
-  });
-
-  res.status(200).render("pages/profile", { currentUser, currentUserFriends });
+    users.forEach(function (friend) {
+      currentUser.friends.forEach(function (currentUserFriend) {
+        if (currentUserFriend == friend._id) {
+          currentUserFriends.push(friend);
+        }
+      });
+    });
+    let signIn = "Welcome " + currentUser.name;
+    res
+      .status(200)
+      .render("pages/profile", { currentUser, currentUserFriends, signIn });
+  }
 };
 
 const handleSign = (req, res) => {
-  res.render("pages/signin");
+  let signIn = "";
+  res.render("pages/signin", { signIn });
 };
 
 const handleName = (req, res) => {
   let firstName = req.query.firstName;
   if (findUser(firstName)._id) {
     let user = findUser(firstName);
-    console.log("have a user: ", user);
-    res.redirect(`/homepage/${user._id}`);
+    let signIn = "Welcome " + firstName;
+    res.status(200).redirect(`/homepage/${user._id}`);
   } else {
     console.log("do not have a user");
-    res.redirect("/signin");
+    res.status(404).redirect("/signin");
   }
 };
 

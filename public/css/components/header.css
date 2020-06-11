@@ -4,7 +4,14 @@
   padding: 0 var(--page-horizontal-padding);
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 .header h1 {
   color: #fff;
+}
+.sign-in-button {
+  color: #fff;
+  font-size: 18px;
+  margin-top: 3px;
+  text-decoration: none;
 }
