@@ -8,6 +8,7 @@
   flex-wrap: wrap;
 }
 .homepage__all--user {
+  position: relative;
   margin: 0 4px;
 }
 .homepage__all--user img {
@@ -18,6 +19,27 @@
   opacity: 80%;
   border: 5px solid orange;
 }
+.ribbon {
+  transform: rotate(-135deg);
+  border: 25px solid transparent;
+  border-top: 25px solid #cc5500;
+  position: absolute;
+  bottom: 88px;
+  right: -31px;
+  padding: -4px 5px;
+  width: 90px;
+  color: #cc5500;
+  font-family: sans-serif;
+  size: 11px;
+}
+.ribbon .txt {
+  position: absolute;
+  top: -20px;
+  transform: rotate(-180deg);
+  color: white;
+  font-size: 15px;
+}​
+
 
 /* .homepage__all--user img {
   transition: 1s ease-out;

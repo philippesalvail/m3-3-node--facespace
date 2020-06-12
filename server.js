@@ -12,8 +12,28 @@ const handleFourOhFour = (req, res) => {
 
 const q1 = (req, res) => {
   let title = "Homepage";
-  let signIn = "Sign in";
-  res.status(200).render("pages/homepage", { users, signIn, title });
+  let firstName = req.query.firstName;
+  if (findUser(firstName)._id) {
+    let currentUser = findUser(firstName);
+    let signIn = "Welcome " + firstName;
+    let currentUserFriends = [];
+    users.forEach(function (friend) {
+      currentUser.friends.forEach(function (currentUserFriend) {
+        if (currentUserFriend == friend._id) {
+          currentUserFriends.push(friend);
+        }
+      });
+    });
+    res.status(200).render("pages/homepage", {
+      users,
+      signIn,
+      title,
+      currentUserFriends,
+      currentUser,
+    });
+  } else {
+    res.status(404).redirect("/signin");
+  }
 };
 
 const q2 = (req, res) => {
@@ -41,6 +61,7 @@ const q2 = (req, res) => {
       currentUserFriends,
       signIn,
       title,
+      users,
     });
   }
 };
@@ -58,7 +79,6 @@ const handleName = (req, res) => {
     let signIn = "Welcome " + firstName;
     res.status(200).redirect(`/homepage/${user._id}`);
   } else {
-    console.log("do not have a user");
     res.status(404).redirect("/signin");
   }
 };

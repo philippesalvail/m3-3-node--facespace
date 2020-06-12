@@ -5,9 +5,19 @@
         <% users.forEach(function(user) { %>
             <div class="homepage__all--user homepage__all--user img">
                 <a href="/homepage/<%- user._id %>"><img src= <%- user.avatarUrl %> alt="no picture"></a>
+            <% currentUserFriends.forEach(function(friend) { %> 
+                <% if(friend.name == user.name) { %>
+                <div class="ribbon">
+                    <div class="txt">
+                        Friend
+                    </div>
+                </div>
+                <%  } %>
+         <% }); %>
             </div>
          <% }); %>
     </div>
   </div>
+
 
 
