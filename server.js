@@ -67,6 +67,7 @@ const q2 = (req, res) => {
 };
 
 const handleSign = (req, res) => {
+  loggedInUser = "";
   let title = "Sign in";
   res.render("pages/signin", { loggedInUser, title });
 };
