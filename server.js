@@ -11,8 +11,9 @@ const handleFourOhFour = (req, res) => {
 };
 
 const q1 = (req, res) => {
+  let title = "Homepage";
   let signIn = "Sign in";
-  res.status(200).render("pages/homepage", { users, signIn });
+  res.status(200).render("pages/homepage", { users, signIn, title });
 };
 
 const q2 = (req, res) => {
@@ -34,15 +35,20 @@ const q2 = (req, res) => {
       });
     });
     let signIn = "Welcome " + currentUser.name;
-    res
-      .status(200)
-      .render("pages/profile", { currentUser, currentUserFriends, signIn });
+    let title = "Profile";
+    res.status(200).render("pages/profile", {
+      currentUser,
+      currentUserFriends,
+      signIn,
+      title,
+    });
   }
 };
 
 const handleSign = (req, res) => {
   let signIn = "";
-  res.render("pages/signin", { signIn });
+  let title = "Sign in";
+  res.render("pages/signin", { signIn, title });
 };
 
 const handleName = (req, res) => {

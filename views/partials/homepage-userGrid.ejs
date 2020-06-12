@@ -4,7 +4,7 @@
     <div class="homepage homepage__all">
         <% users.forEach(function(user) { %>
             <div class="homepage__all--user homepage__all--user img">
-                <img src= <%- user.avatarUrl %> alt="no picture">
+                <a href="/homepage/<%- user._id %>"><img src= <%- user.avatarUrl %> alt="no picture"></a>
             </div>
          <% }); %>
     </div>

@@ -11,5 +11,16 @@
   margin: 0 4px;
 }
 .homepage__all--user img {
+  transition: all ease 400ms;
   width: 120px;
 }
+.homepage__all--user img:hover {
+  opacity: 80%;
+  border: 5px solid orange;
+}
+
+/* .homepage__all--user img {
+  transition: 1s ease-out;
+  opacity: 100%;
+  border: 0px;
+} */
