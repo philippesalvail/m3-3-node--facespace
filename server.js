@@ -4,6 +4,7 @@ const express = require("express");
 const morgan = require("morgan");
 const { users } = require("./data/users");
 let currentUser = {};
+let loggedInUser = "";
 
 // declare the 404 function
 const handleFourOhFour = (req, res) => {
@@ -12,10 +13,10 @@ const handleFourOhFour = (req, res) => {
 
 const q1 = (req, res) => {
   let title = "Homepage";
-  let firstName = req.query.firstName;
-  if (findUser(firstName)._id) {
-    let currentUser = findUser(firstName);
-    let signIn = "Welcome " + firstName;
+  loggedInUser = req.query.firstName;
+  if (findUser(loggedInUser).name) {
+    let currentUser = findUser(loggedInUser);
+    loggedInUser = "Welcome: " + loggedInUser;
     let currentUserFriends = [];
     users.forEach(function (friend) {
       currentUser.friends.forEach(function (currentUserFriend) {
@@ -26,7 +27,7 @@ const q1 = (req, res) => {
     });
     res.status(200).render("pages/homepage", {
       users,
-      signIn,
+      loggedInUser,
       title,
       currentUserFriends,
       currentUser,
@@ -54,12 +55,11 @@ const q2 = (req, res) => {
         }
       });
     });
-    let signIn = "Welcome " + currentUser.name;
     let title = "Profile";
     res.status(200).render("pages/profile", {
       currentUser,
       currentUserFriends,
-      signIn,
+      loggedInUser,
       title,
       users,
     });
@@ -67,16 +67,15 @@ const q2 = (req, res) => {
 };
 
 const handleSign = (req, res) => {
-  let signIn = "";
   let title = "Sign in";
-  res.render("pages/signin", { signIn, title });
+  res.render("pages/signin", { loggedInUser, title });
 };
 
 const handleName = (req, res) => {
   let firstName = req.query.firstName;
+  loggedInUser = firstName;
   if (findUser(firstName)._id) {
     let user = findUser(firstName);
-    let signIn = "Welcome " + firstName;
     res.status(200).redirect(`/homepage/${user._id}`);
   } else {
     res.status(404).redirect("/signin");
