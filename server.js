@@ -14,7 +14,6 @@ const handleFourOhFour = (req, res) => {
 const q1 = (req, res) => {
   let title = "Homepage";
   loggedInUser = loggedInUser || req.query.firstName;
-  console.log("loggedInUser in Q1", loggedInUser);
   if (findUser(loggedInUser).name) {
     let currentUser = findUser(loggedInUser);
     let welcomeUser = "Welcome: " + loggedInUser;
@@ -34,6 +33,7 @@ const q1 = (req, res) => {
       currentUser,
     });
   } else {
+    loggedInUser = "";
     res.status(404).redirect("/signin");
   }
 };
@@ -69,8 +69,12 @@ const q2 = (req, res) => {
 };
 
 const handleSign = (req, res) => {
+  let firstName = req.query.firstName;
   if (loggedInUser) {
     res.redirect("/homepage");
+  } else if (findUser(firstName)._id) {
+    let user = findUser(firstName);
+    res.status(200).redirect(`/homepage/${user._id}`);
   } else {
     let welcomeUser = "";
     let title = "Sign in";
@@ -80,19 +84,21 @@ const handleSign = (req, res) => {
 
 const handleSignOut = (req, res) => {
   loggedInUser = "";
+  let welcomeUser = loggedInUser;
+  let title = "Sign in";
   res.render("pages/signin", { welcomeUser, title });
 };
 
-const handleName = (req, res) => {
-  let firstName = req.query.firstName;
-  loggedInUser = firstName;
-  if (findUser(firstName)._id) {
-    let user = findUser(firstName);
-    res.status(200).redirect(`/homepage/${user._id}`);
-  } else {
-    res.status(404).redirect("/signin");
-  }
-};
+// const handleName = (req, res) => {
+//   let firstName = req.query.firstName;
+//   loggedInUser = firstName;
+//   if (findUser(firstName)._id) {
+//     let user = findUser(firstName);
+//     res.status(200).redirect(`/homepage/${user._id}`);
+//   } else {
+//     res.status(404).redirect("/signin");
+//   }
+// };
 
 function findUser(userName) {
   let userFound = {};
@@ -118,7 +124,6 @@ express()
   // a catchall endpoint that will send the 404 message.
   .get("/signin", handleSign)
   .get("/signout", handleSignOut)
-  .get("/getName", handleName)
   .get("/homepage", q1)
   .get("/homepage/:user_id", q2)
   .get("*", handleFourOhFour)
