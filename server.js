@@ -13,10 +13,11 @@ const handleFourOhFour = (req, res) => {
 
 const q1 = (req, res) => {
   let title = "Homepage";
-  loggedInUser = req.query.firstName;
+  loggedInUser = loggedInUser || req.query.firstName;
+  console.log("loggedInUser in Q1", loggedInUser);
   if (findUser(loggedInUser).name) {
     let currentUser = findUser(loggedInUser);
-    loggedInUser = "Welcome: " + loggedInUser;
+    let welcomeUser = "Welcome: " + loggedInUser;
     let currentUserFriends = [];
     users.forEach(function (friend) {
       currentUser.friends.forEach(function (currentUserFriend) {
@@ -27,7 +28,7 @@ const q1 = (req, res) => {
     });
     res.status(200).render("pages/homepage", {
       users,
-      loggedInUser,
+      welcomeUser,
       title,
       currentUserFriends,
       currentUser,
@@ -56,10 +57,11 @@ const q2 = (req, res) => {
       });
     });
     let title = "Profile";
+    let welcomeUser = "Welcome: " + loggedInUser;
     res.status(200).render("pages/profile", {
       currentUser,
       currentUserFriends,
-      loggedInUser,
+      welcomeUser,
       title,
       users,
     });
@@ -67,9 +69,18 @@ const q2 = (req, res) => {
 };
 
 const handleSign = (req, res) => {
+  if (loggedInUser) {
+    res.redirect("/homepage");
+  } else {
+    let welcomeUser = "";
+    let title = "Sign in";
+    res.render("pages/signin", { welcomeUser, title });
+  }
+};
+
+const handleSignOut = (req, res) => {
   loggedInUser = "";
-  let title = "Sign in";
-  res.render("pages/signin", { loggedInUser, title });
+  res.render("pages/signin", { welcomeUser, title });
 };
 
 const handleName = (req, res) => {
@@ -106,6 +117,7 @@ express()
 
   // a catchall endpoint that will send the 404 message.
   .get("/signin", handleSign)
+  .get("/signout", handleSignOut)
   .get("/getName", handleName)
   .get("/homepage", q1)
   .get("/homepage/:user_id", q2)

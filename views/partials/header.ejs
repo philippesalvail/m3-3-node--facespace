@@ -9,5 +9,8 @@
 <body>
   <header class="header">
       <h1 class='site-title'>Facespace</h1>
-      <a class="sign-in-button" href="signin" id="signin_id"><%- loggedInUser %></a>
+      <a class="sign-in-button" id="signin_id"><%- welcomeUser %></a>
+      <% if (welcomeUser != "")  { %>
+        <a class="sign-in-button" href="signout" id="signin_id">Sign out</a>
+      <% } %>
   </header>
